@@ -1,0 +1,49 @@
+
+.button {
+margin-top:10px;
+margin-left:10px;
+}
+.list {
+  border-top: 1px solid #e2e2e2;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding-top: 21px;
+}
+
+.leftpane {
+  height: inherit;
+  font-size: 10px;
+  margin-top:30px;
+  position: relative;
+  float: left;
+  opacity: 0.25;
+  border-collapse: collapse;
+}
+
+.rightpane {
+width: 30%;
+height: inherit;
+position: relative;
+float: right;
+border-collapse: collapse;
+}
+
+.textStyle {
+  font-size: 10px;
+  color:#B22222;
+}
+.listdiv {
+  position: relative;
+}
+.toppane {
+width: 100%;
+height: 100px;
+border-collapse: collapse;
+}
