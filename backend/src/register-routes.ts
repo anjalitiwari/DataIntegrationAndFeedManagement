@@ -27,6 +27,12 @@ const registerRoutes = (app: ExpressApplication): void => {
   insertFeeds(app);
   rateFeeds(app);
   topRatedFeeds(app);
+
+
+  app.get('/', (_req, res) => {
+    return res.status(200).send({ 'msg': 'Server is up!' });
+  }); /* A simple route to test setup */
+
 }
 
 export default registerRoutes;

@@ -4,7 +4,7 @@ const data = {
 
     port: 4000,
     dbOptions : {
-        host: '127.0.0.1',
+        host: 'localhost',
         port: 6379
     }
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as _ from 'lodash';
 import './App.css';
 import { getFeeds } from './actions/getFeeds';
 import { getTopRatedFeeds } from './actions/getTopRatedFeeds';
@@ -8,7 +9,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      endpoint: "http://127.0.0.1:4000/",
+      endpoint: "http://127.0.0.1:80/",
       feeds: [],
       feedType: 'general'
     };
@@ -41,6 +42,7 @@ class App extends Component {
     if (data !== undefined) {
       for (var i in data) {
         if (data[i].items !== undefined) {
+          data[i].items = _.orderBy(data[i].items, ['rating'], ['desc'])
           data[i].items.forEach((element) => {
             feedsArray.push(
               <MediumItem
@@ -50,7 +52,7 @@ class App extends Component {
                 type={this.state.feedType}
               />
             )
-          })
+          });
         }
       }
     }
@@ -58,7 +60,6 @@ class App extends Component {
   }
   render() {
     let feedData = this.state.feeds;
-    console.log(feedData)
     return (
       <div className="App">
         <div className="button" onClick={this.getTopFeeds.bind(this)}><button>Click here to get Top 5 rated feeds</button></div>

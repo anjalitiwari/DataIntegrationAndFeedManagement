@@ -6,13 +6,15 @@ const sendResp = (statusCode: number, data: any, response: ExpressResponse) => {
 
 const handler: ExpressHandler = (request: ExpressRequest, response: ExpressResponse) => {
     try {
-        const args = ['ratingSet', 4, 0,];
+        const offset = 0;
+        const count = 5;
+        const args = ['ratingSet', 5, 0, 'LIMIT', offset, count];
         request['dbClient'].zrevrangebyscore(args, (err: Error, result: any) => {
-            const feedsData = result.map((el: any) => {
+            const topFeeds = result.map((el: any) => {
                 var o = Object.assign({}, JSON.parse(el));
                 return o;
             });
-            sendResp(200, { data: feedsData }, response)
+            sendResp(200, { data: topFeeds }, response)
         });
     } catch (err) {
         sendResp(500, err, response)
