@@ -1,4 +1,4 @@
-import { ExpressApplication, ExpressMiddleware, ExpressRequest, ExpressResponse } from '@interfaces/index';
+import { ExpressApplication, ExpressMiddleware, ExpressRequest, ExpressResponse } from '../interfaces/index';
 import { NextFunction } from 'connect';
 
 const middlewareWrapper = (app: ExpressApplication): void => {

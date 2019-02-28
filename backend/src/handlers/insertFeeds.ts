@@ -10,18 +10,21 @@ const sendResp = (statusCode: number, data: any, response: ExpressResponse) => {
 const handler: ExpressHandler = (request: ExpressRequest, response: ExpressResponse) => {
     try {
         async.each(config.news, async (feed: string, callback: any) => {
-            const dataToInsert: feedJson | {} = await parseFeed(feed);
-            console.log("Inserted news feed -> ", 'newsFeed::' + dataToInsert["id"])
-            request['dbClient'].set('newsFeed::' + dataToInsert["id"], JSON.stringify(dataToInsert), (err: Error) => {
-                if (err) throw new Error("Error:" + err);
-                callback(null);
-            });
+            try {
+                const dataToInsert: feedJson | {} = await parseFeed(feed);
+                request['dbClient'].set('newsFeed::' + dataToInsert["id"], JSON.stringify(dataToInsert), (err: Error) => {
+                    if (err) throw new Error("Error:" + err);
+                    callback(null);
+                })
+            } catch (e) {
+                callback(null) /* If unable to fetch rss feeds for one resource the loop should continue for next rss news resource */
+            }
         }, () => {
             sendResp(200, { message: 'FEEDS INSERTED SUCCESSFULLY' }, response);
         });
-    } catch (e) {
+    }
+    catch (e) {
         sendResp(500, { message: 'Something went wrong' }, response);
-
     }
 }
 

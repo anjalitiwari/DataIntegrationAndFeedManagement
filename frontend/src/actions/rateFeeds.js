@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const rateFeeds = (endpoint, rating, newsId, id, callback) => {
-    console.log(endpoint,rating, newsId, id)
     axios({
         method: 'POST',
         url: endpoint,

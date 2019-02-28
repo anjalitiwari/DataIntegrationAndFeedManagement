@@ -1,4 +1,4 @@
-import { ExpressHandler, ExpressRequest, ExpressResponse, feedJson } from '../interfaces/index'
+import { ExpressHandler, ExpressRequest, ExpressResponse, feedJson } from '../interfaces/index';
 import async = require('async');
 
 const sendResp = (statusCode: number, data: any, response: ExpressResponse) => {
@@ -8,8 +8,10 @@ const sendResp = (statusCode: number, data: any, response: ExpressResponse) => {
 const handler: ExpressHandler = (request: ExpressRequest, response: ExpressResponse) => {
     try {
         let feedsData: feedJson[] = [];
+        /* Fetching all the keys matching pattern newsFeed::* stored in redis*/
         request['dbClient'].keys("newsFeed::*", (err: Error, result: any) => {
             async.each(result, (key, callback) => {
+                /* Fetching the data for each key*/
                 request['dbClient'].get(key, (err: Error, feed: any) => {
                     feedsData.push(JSON.parse(feed))
                     callback()

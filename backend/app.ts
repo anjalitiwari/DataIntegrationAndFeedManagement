@@ -1,13 +1,14 @@
 import * as express from 'express';
 import registerRoutes from './src/register-routes';
 import { ExpressApplication } from './src/interfaces/index';
+import { data as config } from './config/data';
 
 
-const port = 4000; // This can later be taken from config file
+const port = config.port; // This is taken from config file
 
 const app: ExpressApplication = express();
 
-// Register all routes
+// Register all routes with middlewares and db connection
 registerRoutes(app);
 
 app.listen(port, (err: Error) => {
@@ -15,5 +16,6 @@ app.listen(port, (err: Error) => {
   if (err) {
     throw err;
   }
-
 });
+
+export default app

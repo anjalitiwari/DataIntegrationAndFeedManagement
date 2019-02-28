@@ -1,6 +1,6 @@
 const Parser = require('rss-parser');
 import uniqid = require('uniqid');
-import { feedJson } from '@interfaces/index';
+import { feedJson } from '../interfaces/index';
 
 
 const parseFeed = (feedData: string) => {
@@ -8,12 +8,12 @@ const parseFeed = (feedData: string) => {
         try {
             let parser = new Parser();
             let feed = await parser.parseURL(feedData);
-            
+
             /* Insert one more field rating for every item */
             const result = feed.items.map((el: any) => {
                 var o = Object.assign({}, el);
                 o.rating = 0;
-                o.id =  uniqid();
+                o.id = uniqid();
                 return o;
             });
             const feedJson: feedJson = {
@@ -26,10 +26,10 @@ const parseFeed = (feedData: string) => {
                 'items': result
 
             }
-            resolve(feedJson);
+            return resolve(feedJson);
         }
-        catch (e) {
-            reject(e);
+        catch (error) {
+            return reject("Unable to parse Rss feed");
         }
 
     });

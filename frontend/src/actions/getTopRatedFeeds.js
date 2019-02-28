@@ -1,7 +1,6 @@
 import axios from "axios";
 
 const getTopRatedFeeds = (endpoint, callback) => {
-    console.log(endpoint,"endpoint------------------")
     axios({
         method: 'GET',
         url: endpoint,

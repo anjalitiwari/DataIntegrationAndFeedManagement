@@ -17,23 +17,30 @@ const handler: ExpressHandler = (request: ExpressRequest, response: ExpressRespo
             const feedJson = JSON.parse(feed)
             let ratedData = {}
             ratedData['items'] = [];
-            feedJson.items = feedJson.items.map((el: any) => {
-                let o = Object.assign({}, el);
-                if (el.id === data.id) {
-                    o.rating = data.rating;
-                    ratedData['items'].push(el)
-                    args.push(data.rating, JSON.stringify(ratedData))
+            try {
+                if (feedJson.items.length > 0) {
+                    feedJson.items = feedJson.items.map((el: any) => {
+                        let o = Object.assign({}, el);
+                        if (el.id === data.id) {
+                            o.rating = data.rating;
+                            ratedData['items'].push(el)
+                            args.push(data.rating, JSON.stringify(ratedData))
+                        }
+                        return o;
+                    });
+                    request['dbClient'].set(key, JSON.stringify(feedJson), (err: Error, feed: any) => {
+                        /* Add rating as score with corresponding news item into a sorted set using zadd in redis
+                        This will help in finding top 5 rated news article later
+                         */
+                        request['dbClient'].zadd(args, (err: Error, result: any) => {
+                            sendResp(200, { message: 'FEED RATED SUCCESSFULLY' }, response)
+                        });
+                    });
                 }
-                return o;
-            });
-            request['dbClient'].set(key, JSON.stringify(feedJson), (err: Error, feed: any) => {
-                /* Add rating as score with corresponding news item into a sorted set using zadd in redis
-                This will help in finding top 5 rated news article later
-                 */
-                request['dbClient'].zadd(args, (err: Error, result: any) => {
-                    sendResp(200, { message: 'FEED RATED SUCCESSFULLY' }, response)
-                });
-            });
+            }
+            catch (err) {
+                sendResp(404, { "message": "NewsId or item id does'nt exist or the news is expired" }, response)
+            }
         });
     } catch (err) {
         sendResp(500, err, response)
