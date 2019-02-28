@@ -1,5 +1,6 @@
 version: '3'
 services:
+<<<<<<< HEAD
   redis:
     image: redis
     container_name: redis
@@ -12,23 +13,48 @@ services:
     volumes:
       - ./nginxConf/nginx.conf:/etc/nginx/nginx.conf
 
+=======
+>>>>>>> 9b5aa3cbef526e07d093ae157c96de9c9c6170c5
   server:
     build: 
       context: ./backend/
     container_name: DataFeedBackend
     network_mode: "host"
+<<<<<<< HEAD
     depends_on:
       - redis
       - nginx
       
+=======
+    command: npm start
+
+>>>>>>> 9b5aa3cbef526e07d093ae157c96de9c9c6170c5
   client:
     build:
       context: ./frontend/
     container_name: DataFeedClient
     network_mode: "host"
     depends_on:
+<<<<<<< HEAD
       - redis
       - nginx 
       - server
 
+=======
+      - server
+    command: npm start
+
+
+  redis:
+    image: redis
+    container_name: redis
+    network_mode: "host"
+  
+  nginx:
+    image: nginx
+    container_name: nginx
+    network_mode: "host"
+    volumes:
+      - ./nginxConf/nginx.conf:/etc/nginx/nginx.conf
+>>>>>>> 9b5aa3cbef526e07d093ae157c96de9c9c6170c5
    
