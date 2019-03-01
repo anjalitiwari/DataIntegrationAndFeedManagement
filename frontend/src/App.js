@@ -1,9 +1,11 @@
+/* eslint-disable no-loop-func */
 import React, { Component } from 'react';
 import * as _ from 'lodash';
+import ReactLoading from 'react-loading';
 import './App.css';
 import { getFeeds } from './actions/getFeeds';
 import { getTopRatedFeeds } from './actions/getTopRatedFeeds';
-import MediumItem from './components/medium';
+import ListView from './components/listView';
 
 class App extends Component {
   constructor() {
@@ -11,7 +13,8 @@ class App extends Component {
     this.state = {
       endpoint: "http://127.0.0.1:80/",
       feeds: [],
-      feedType: 'general'
+      feedType: 'general',
+      active: false
     };
   }
   componentDidMount() {
@@ -27,11 +30,10 @@ class App extends Component {
 
   getTopFeeds() {
     getTopRatedFeeds(this.state.endpoint + 'topRatedFeeds', (err, result) => {
-      console.log(result)
       if (err) {
         alert(err)
       } else {
-        this.setState({ feeds: result.data, feedType: "top5" })
+        this.setState({ active: true, feeds: result.data, feedType: "top5" })
       }
     });
   }
@@ -45,25 +47,30 @@ class App extends Component {
           data[i].items = _.orderBy(data[i].items, ['rating'], ['desc'])
           data[i].items.forEach((element) => {
             feedsArray.push(
-              <MediumItem
+              <ListView
                 items={element}
                 endpoint={this.state.endpoint}
                 newsId={data[i].id}
-                type={this.state.feedType}
-              />
-            )
+                type={this.state.feedType} />)
           });
         }
       }
     }
     return feedsArray
   }
+
   render() {
-    let feedData = this.state.feeds;
     return (
       <div className="App">
-        <div className="button" onClick={this.getTopFeeds.bind(this)}><button>Click here to get Top 5 rated feeds</button></div>
-        {feedData.length <= 0 ? '' : <ol>{this.callForEachFeed(feedData)}</ol>}
+        <div>
+          <div className="button" onClick={this.getTopFeeds.bind(this)}><button>Click here to get Top 5 rated feeds</button></div>
+          <div className="rightDiv">
+            {this.state.active ? <p><a href="http://127.0.0.1:3000">Home</a></p> : ''}
+          </div>
+        </div>
+        {(this.state.feeds !== undefined && Object.keys(this.state.feeds).length > 0) ?
+          <ol>{this.callForEachFeed(this.state.feeds)}</ol> :
+          <div className="loader"><ReactLoading type={"bars"} color={"#393318"} height={'10%'} width={'15%'} /><p>Loading Feeds</p></div>}
       </div>
     );
   }

@@ -26,13 +26,25 @@ margin-left:10px;
   opacity: 0.25;
   border-collapse: collapse;
 }
-
+.rightDiv {
+  align-content: right;
+  right: 30px;
+  position: absolute;
+  font-size: 20px;
+  top: 0px
+}
 .rightpane {
 width: 30%;
 height: inherit;
 position: relative;
 float: right;
 border-collapse: collapse;
+}
+
+.loader {
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
 .textStyle {

@@ -13,4 +13,4 @@ COPY . .
 
 EXPOSE 4000
 
-Entrypoint ["sh","./dockerentrypoint.sh"]
+ENTRYPOINT ["sh","./dockerentrypoint.sh"]

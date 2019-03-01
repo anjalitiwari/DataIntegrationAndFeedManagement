@@ -23,3 +23,8 @@ export interface ratingPayload {
     id:string;
     rating: number;
 }
+
+export interface redisParams {
+    key: string,
+    data ?: Object
+}
