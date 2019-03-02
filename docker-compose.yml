@@ -23,7 +23,7 @@ services:
       - server
      
   nginx:
-    image: nginx
+    image: mendlik/nginx-cache
     container_name: nginx
     network_mode: "host"
     depends_on:
