@@ -40,7 +40,7 @@ Nginx will run default at port 80
 Start Backend server as follows
 
 ```
-cd backend
+cd server
 npm install
 npm run test
 npm run start-dev // For running typescript files locally
@@ -52,7 +52,7 @@ This should make your server running in port 4000
 
 Start Frontend server as follows
 ```
-cd frontend
+cd client
 npm install
 npm run start
 
