@@ -56,5 +56,5 @@ cd client
 npm install
 npm run start
 
-This should make your server running in port 3000
+This should make your server running in port 3000 (default port)
 ```
