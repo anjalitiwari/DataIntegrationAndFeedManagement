@@ -23,7 +23,7 @@
     "@types/node": "^10.12.18",
     "@types/redis": "^2.8.10",
     "@types/sinon": "^7.0.8",
-    "async": "^2.6.2",
+    "async": "^3.2.2",
     "body-parser": "^1.18.3",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
